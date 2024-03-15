@@ -1,0 +1,9 @@
+﻿<Application x:Class="Lab02_Vasyliev.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Lab02_Vasyliev"
+             StartupUri="View/PersonForm.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

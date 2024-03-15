@@ -1,0 +1,33 @@
+﻿<Window x:Class="Lab02_Vasyliev.View.PersonForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab02_Vasyliev.View"
+        mc:Ignorable="d"
+        Title="PersonForm" Height="450" Width="500" IsEnabled="{Binding IsEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="First name" HorizontalAlignment="Left" FontSize="16" Margin="10,10,0,5"></TextBlock>
+        <TextBox Name="TbFirstName" Grid.Row="1" Margin="50, 10, 50, 20" Text="{Binding FirstName}"/>
+        <TextBlock Grid.Row="2" Text="Last name" HorizontalAlignment="Left" FontSize="16" Margin="10,10,0,5"></TextBlock>
+        <TextBox Name="TbLastName" Grid.Row="3" Margin="50, 10, 50, 20" Text="{Binding LastName}"/>
+        <TextBlock Grid.Row="4" Text="E-mail" HorizontalAlignment="Left" FontSize="16" Margin="10,10,0,5"></TextBlock>
+        <TextBox Name="TbEmail" Grid.Row="5" Margin="50, 10, 50, 20" Text="{Binding Email}"/>
+        <TextBlock Grid.Row="6" Text="Birth date" HorizontalAlignment="Left" FontSize="16" Margin="10,10,0,5"></TextBlock>
+        <DatePicker Name="DpBirthday" Grid.Row="7" Margin="50, 10, 50, 20" SelectedDate="{Binding BirthDate}"/>
+        <Button Name="BProceed" Grid.Row="8" HorizontalAlignment="Center" Height="30" Width="120" Content="Proceed" Click="BProceed_Click" IsEnabled="{Binding IsProceedEnabled}"></Button>
+
+    </Grid>
+</Window>
