@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lab02_Vasyliev.Exceptions;
+using System.Text.RegularExpressions;
 
 namespace Lab02_Vasyliev.Model
 {
@@ -13,7 +15,7 @@ namespace Lab02_Vasyliev.Model
         public string Email { get; set; }
         public DateTime DateOfBirth { get; set; }
 
-        public bool IsAdult => CalculateAge(DateOfBirth) >= 18;
+        public bool IsAdult => CalculateAge() >= 18;
         public string SunSign => CalculateSunSign(DateOfBirth);
         public string ChineseSign => CalculateChineseSign(DateOfBirth);
         public bool IsBirthday => DateOfBirth.Month == DateTime.Today.Month && DateOfBirth.Day == DateTime.Today.Day;
@@ -33,10 +35,10 @@ namespace Lab02_Vasyliev.Model
             DateOfBirth = dateOfBirth;
         }
 
-        public int CalculateAge(DateTime dateOfBirth)
+        public int CalculateAge()
         {
-            int age = DateTime.Today.Year - dateOfBirth.Year;
-            if (DateTime.Today.Month < dateOfBirth.Month || (DateTime.Today.Month == dateOfBirth.Month && DateTime.Today.Day < dateOfBirth.Day))
+            int age = DateTime.Today.Year - this.DateOfBirth.Year;
+            if (DateTime.Today.Month < this.DateOfBirth.Month || (DateTime.Today.Month == this.DateOfBirth.Month && DateTime.Today.Day < this.DateOfBirth.Day))
             {
                 age--;
             }
@@ -103,7 +105,7 @@ namespace Lab02_Vasyliev.Model
         {
             int startYear = 1924;
             int difference = dateOfBirth.Year - startYear;
-            int signIndex = (difference + 12) % 12;
+            int signIndex = (difference + 11) % 12;
 
             string[] chineseSigns = {
         "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake",
@@ -111,7 +113,30 @@ namespace Lab02_Vasyliev.Model
     };
 
             return chineseSigns[signIndex];
-            
+
+        }
+
+        public bool IsBirthDateCorrect()
+        {
+            if (CalculateAge() > 135)
+            {
+                throw new PastDateException("Age is impossible");
+            }
+            else if(this.DateOfBirth > DateTime.Today)
+            {
+                throw new FutureDateException("Birth date can`t be in the future.");
+            }
+            return true;
+        }
+
+        public bool IsEmailValid()
+        {
+            string pattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+            if(!Regex.IsMatch(this.Email, pattern))
+            {
+                throw new InvalidEmailFormatException("Entered e-mail is invalid.");
+            }
+            return true;
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Lab02_Vasyliev.Model;
+using Lab02_Vasyliev.Exceptions;
 
 namespace Lab02_Vasyliev.ViewModel
 {
@@ -91,7 +92,7 @@ namespace Lab02_Vasyliev.ViewModel
 
         public int Age
         {
-            get { return _person.CalculateAge(_person.DateOfBirth); }
+            get { return _person.CalculateAge(); }
         }
 
 
@@ -111,19 +112,25 @@ namespace Lab02_Vasyliev.ViewModel
 
         public async void Proceed()
         {
-            if (this.Age > 135 || this.BirthDate > DateTime.Today)
+            try
             {
-                MessageBox.Show("Incorrect date.");
+                _person.IsEmailValid();
+                _person.IsBirthDateCorrect();
+                
             }
-            else
+            catch(Exception ex)
             {
-                if (this.IsBirthday == true)
-                {
-                    MessageBox.Show("Happy birthday!");
-                }
-                IsEnabled = false;
-                await Task.Run(() => MessageBox.Show($" First name:{this.FirstName}\n Last name:{this.LastName}\n E-mail:{this.Email}\n Birh date:{this.BirthDate}\n Is adult:{this.IsAdult}\n IsBirthday:{this.IsBirthday}\n Sun sign:{this.SunSign}\n ChineseSign:{this.ChineseSign}"));
+                MessageBox.Show($"Error: {ex.Message}");
+                return;
             }
+            
+            if (this.IsBirthday == true)
+            {
+                MessageBox.Show("Happy birthday!");
+            }
+            IsEnabled = false;
+            await Task.Run(() => MessageBox.Show($" First name:{this.FirstName}\n Last name:{this.LastName}\n E-mail:{this.Email}\n Birh date:{this.BirthDate}\n Is adult:{this.IsAdult}\n IsBirthday:{this.IsBirthday}\n Sun sign:{this.SunSign}\n ChineseSign:{this.ChineseSign}"));
+            
             
             IsEnabled = true;
             
